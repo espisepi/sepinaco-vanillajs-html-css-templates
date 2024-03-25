@@ -1,3 +1,6 @@
+// Es necesario poner en el html:
+// <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
 class SepinacoCanvasThreejs extends HTMLElement {
     constructor() {
         super();
