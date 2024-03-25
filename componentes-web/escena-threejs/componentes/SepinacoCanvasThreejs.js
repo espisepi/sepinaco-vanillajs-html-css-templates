@@ -1,4 +1,4 @@
-class SepinacoContador extends HTMLElement {
+class SepinacoCanvasThreejs extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -66,4 +66,4 @@ class SepinacoContador extends HTMLElement {
 }
 
 // Definimos el custom element
-customElements.define('sepinaco-contador', SepinacoContador);
+customElements.define('sepinaco-canvas-threejs', SepinacoCanvasThreejs);
