@@ -1,67 +1,48 @@
 class SepinacoCanvasThreejs extends HTMLElement {
     constructor() {
         super();
+        // https://lenguajejs.com/webcomponents/shadow-dom/que-es-shadow-dom/
         this.attachShadow({ mode: 'open' });
 
-        this.count = 0; // Estado inicial del contador
+        // SepinacoCanvasThreejs
+        this.contenedor = this.shadowRoot;
+        console.log(this.shadowRoot);
+        this.escena = new THREE.Scene();
+        this.camara = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.renderizador = new THREE.WebGLRenderer();
+        this.cubo = null;
 
-        // Elementos del DOM
-        this.countDisplay = document.createElement('span');
-        this.increaseButton = this.createButton('+', this.increaseCount.bind(this));
-        this.decreaseButton = this.createButton('-', this.decreaseCount.bind(this));
-        this.resetButton = this.createButton('Reset', this.resetCount.bind(this));
-
-        // Estilos básicos
-        const styles = `
-            :host {
-                display: block;
-                font-family: sans-serif;
-                text-align: center;
-            }
-            span {
-                margin: 0 10px;
-                font-size: 20px;
-            }
-        `;
-
-        // Aplicamos los estilos y elementos al shadow DOM
-        const styleEl = document.createElement('style');
-        styleEl.textContent = styles;
-        this.shadowRoot.append(styleEl, this.decreaseButton, this.countDisplay, this.increaseButton, this.resetButton);
-
-        this.updateCountDisplay();
+        this.iniciar();
     }
 
-    // Métodos para manejar los eventos de los botones
-    increaseCount() {
-        this.count++;
-        this.updateCountDisplay();
-        this.dispatchEvent(new CustomEvent('change', { detail: this.count }));
+    iniciar() {
+        this.camara.position.z = 5;
+        this.renderizador.setSize(window.innerWidth, window.innerHeight);
+        this.contenedor.appendChild(this.renderizador.domElement);
+
+        // Añadir un objeto a la escena
+        const geometria = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        this.cubo = new THREE.Mesh(geometria, material);
+        this.escena.add(this.cubo);
+
+        this.ajustarRenderizador();
+        this.animar();
     }
 
-    decreaseCount() {
-        this.count--;
-        this.updateCountDisplay();
-        this.dispatchEvent(new CustomEvent('change', { detail: this.count }));
+    ajustarRenderizador() {
+        window.addEventListener('resize', () => {
+            this.camara.aspect = window.innerWidth / window.innerHeight;
+            this.camara.updateProjectionMatrix();
+            this.renderizador.setSize(window.innerWidth, window.innerHeight);
+        });
     }
 
-    resetCount() {
-        this.count = 0;
-        this.updateCountDisplay();
-        this.dispatchEvent(new CustomEvent('change', { detail: this.count }));
-    }
-
-    // Actualiza el display del contador
-    updateCountDisplay() {
-        this.countDisplay.textContent = this.count;
-    }
-
-    // Crea botones de forma programática
-    createButton(text, onClick) {
-        const button = document.createElement('button');
-        button.textContent = text;
-        button.addEventListener('click', onClick);
-        return button;
+    animar() {
+        requestAnimationFrame(() => this.animar());
+        this.cubo.rotation.x += 0.01;
+        this.cubo.rotation.y += 0.01;
+        this.renderizador.render(this.escena, this.camara);
     }
 }
 
