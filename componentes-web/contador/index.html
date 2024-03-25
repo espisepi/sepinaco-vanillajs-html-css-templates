@@ -17,6 +17,11 @@
     <sepinaco-contador></sepinaco-contador>
     <script src="./contador/componentes/SepinacoContador.js"></script>
     <!-- <script src="./componentes/SepinacoContador.js"></script> -->
+    <script>
+        document.querySelector('sepinaco-contador').addEventListener('change', (e) => {
+            console.log('Nuevo valor del contador:', e.detail);
+        });
+    </script>
 
 </body>
 </html>
