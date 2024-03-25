@@ -1,5 +1,6 @@
 // Es necesario poner en el html:
 // <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+// <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
 class SepinacoCanvasThreejs extends HTMLElement {
     constructor() {
@@ -13,7 +14,19 @@ class SepinacoCanvasThreejs extends HTMLElement {
         this.renderizador = new THREE.WebGLRenderer();
         this.cubo = null;
 
+        // Agregar OrbitControls
+        this.controles = null;
+
         this.iniciar();
+        this.iniciarOrbitControls();
+    }
+
+    iniciarOrbitControls() {
+        // Inicializar OrbitControls
+        this.controles = new THREE.OrbitControls(this.camara, this.renderizador.domElement);
+        // Habilitar amortiguación (damping) y configurar el factor de amortiguación
+        this.controles.enableDamping = true;
+        this.controles.dampingFactor = 0.05;
     }
 
     iniciar() {
@@ -43,6 +56,10 @@ class SepinacoCanvasThreejs extends HTMLElement {
         requestAnimationFrame(() => this.animar());
         this.cubo.rotation.x += 0.01;
         this.cubo.rotation.y += 0.01;
+
+        // Actualizar los controles en cada frame
+        this.controles?.update();
+
         this.renderizador.render(this.escena, this.camara);
     }
 }
