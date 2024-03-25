@@ -1,6 +1,7 @@
 class SepinacoContador extends HTMLElement {
     constructor() {
         super();
+        // https://lenguajejs.com/webcomponents/shadow-dom/que-es-shadow-dom/
         this.attachShadow({ mode: 'open' });
 
         this.count = 0; // Estado inicial del contador

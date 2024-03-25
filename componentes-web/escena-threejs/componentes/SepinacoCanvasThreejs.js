@@ -4,9 +4,7 @@ class SepinacoCanvasThreejs extends HTMLElement {
         // https://lenguajejs.com/webcomponents/shadow-dom/que-es-shadow-dom/
         this.attachShadow({ mode: 'open' });
 
-        // SepinacoCanvasThreejs
         this.contenedor = this.shadowRoot;
-        console.log(this.shadowRoot);
         this.escena = new THREE.Scene();
         this.camara = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.renderizador = new THREE.WebGLRenderer();
