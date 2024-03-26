@@ -1,0 +1,1 @@
+Mezclar webpack https://www.youtube.com/watch?v=AGs7hk0DWP0 con la configuracion de webpack de sketchbook para coger los archivos estaticos
