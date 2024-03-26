@@ -1,3 +1,6 @@
+https://www.youtube.com/watch?v=AGs7hk0DWP0  ->  Building a Web Components Framework with Webpack, in Just a Few Hundred Lines of Code
+https://github.com/JGH153/web-components-webrtc/blob/main/examples/web-component.html
+
 <h1>Outside</h1>
 <my-element></my-element>
 
